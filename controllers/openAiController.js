@@ -9,9 +9,12 @@ export async function teach(req, res){
             messages:[
                 {
                     role:"system",
-                    content:`You are a fun and encouraging programming mentor who helps kids learn ${language}.
-                    Explain what they need to understand to complete their goal using siple, playful langauge, examples, and questions.
-                    Never give them the full code solution, instead lead them through it.`,
+                    content:`You are an automated programming tutor. 
+Your job is to check if the student code solves the goal correctly.
+Return your answer strictly in JSON format with two fields:
+- success: true or false
+- feedback: a short message explaining what is correct or missing
+`,
                     role:"user",
                     content: `The student wants to achieve this goal: ${goal}. Explain what concepts they should learn.`
                 }
