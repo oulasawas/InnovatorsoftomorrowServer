@@ -1,19 +1,18 @@
 import OpenAI from "openai";
 
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
-export async function teach(req, res){
-    const {goal, langauge} = req.body;
+export async function codeSnippet(req, res){
+    const {concept, language, description} = req.body;
     try{
         const completion = await openai.chat.completions.create({
             model:"gpt-4o-mini",
             messages:[
                 {
                     role:"system",
-                    content:`You are a fun and encouraging programming mentor who helps kids learn ${language}.
-                    Explain what they need to understand to complete their goal using siple, playful langauge, examples, and questions.
-                    Never give them the full code solution, instead lead them through it.`,
+                    content:`You will provide an easy code snippet to explain a programming concept in ${concept} using ${language}.
+                    The example should ${description}`,
                     role:"user",
-                    content: `The student wants to achieve this goal: ${goal}. Explain what concepts they should learn.`
+                    content: `The student wants to learn about ${concept}, give a simple code snippet to ${description}`
                 }
             ]
         })
