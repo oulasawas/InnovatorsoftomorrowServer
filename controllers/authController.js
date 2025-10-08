@@ -1,5 +1,5 @@
 // controllers/authController.js
-//import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 //import jwt from "jsonwebtoken";
 let  User =require("../models/User.js")
 
