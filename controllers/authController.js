@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-let  User =require("../models/User.js")
+import User from "../models/User.js";
 
 // LOGIN USER
 exports.loginUser = async (req, res) => {
