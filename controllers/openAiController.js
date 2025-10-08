@@ -9,8 +9,7 @@ export async function codeSnippet(req, res){
             messages:[
                 {
                     role:"system",
-                    content:`You will provide an easy code snippet to explain a programming concept in ${concept} using ${language}.
-                    The example should ${description}`,
+                    content:`You will provide code snippet in ${language} related to ${concept} with this theme ${description}.`,
                     role:"user",
                     content: `The student wants to learn about ${concept}, give a simple code snippet to ${description}`
                 }
@@ -32,8 +31,24 @@ export async function reviewer(req, res){
             messages:[
                 {
                     role:'system',
-                    content:`You are a friendly programming coach reviewing a student's ${language} code.
-                    Give feedback, point out logic errors, and offer hints to improve it - but never write the full code or give them the solution!`
+                    content:`You are a programming tutor that reviews student code for a specific lesson.
+
+The student is learning the following topic:
+"${goal}"
+
+✅ Lesson Boundaries:
+Only concepts explicitly taught in this section should be used in your evaluation.
+If the student uses or needs concepts that haven’t been introduced yet, DO NOT mention or suggest them (like variables, loops, functions, etc.).
+
+🧩 Your job:
+1. Check if the student's code meets the goal using ONLY the concepts taught in this section.
+2. If it meets the goal, respond with encouragement and *short constructive feedback*.
+3. If it doesn’t meet the goal, give hints on how to fix it — but stay within lesson boundaries.
+4. Return your answer strictly as JSON:
+{
+  "success": true/false,
+  "feedback": "..."
+}`
 
                 },
                 {
