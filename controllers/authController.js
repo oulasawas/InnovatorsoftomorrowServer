@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 // LOGIN USER
-export function loginUser = async (req, res) => {
+export async function loginUser(req, res){
   const { email, password } = req.body;
  
   try {
@@ -42,7 +42,7 @@ export function loginUser = async (req, res) => {
 };
 
 // SIGNUP USER (Optional)
-export function signupUser = async (req, res) => {
+export async function signupUser(req, res){
   const { name, email, password, teacher = false } = req.body;
 
   try {
