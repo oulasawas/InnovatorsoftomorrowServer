@@ -12,12 +12,12 @@ const sectionSchema = new mongoose.Schema({
     gifs: { type: [String], default: undefined  }
   },
   problem: { type: String, required: false },
-  code: {
-    //description: {type: String, required:true},
+  codes: [
+    language: {type: String, required:true},
     text: { type: String, required: false },
     gifs: { type: [String], default: undefined  }
 
-  },
+  ],
   challenge: {
     description: { type: String, required: false },
     hint: { type: String, required: false },
