@@ -194,3 +194,22 @@ exports.updateBlock = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.getCode = async(req, res=>{
+    const { courseId, lessonNumber, sectionNumber } = req.params;
+    const language = req.body.language;
+    try {
+        const course = await Course.findById(courseId);
+        const lesson = course?.lessons[parseInt(lessonNumber)];
+        const section = lesson?.sections[parseInt(sectionNumber)];
+
+        if (!section) return res.status(404).json({ error: "Section not found" });
+
+        //section[blockType] = { ...section[blockType], ...blockData };
+        const codeSnippet = section.codes.find(c=> c.language === language)
+        res.status(200).json({codeSnippet: codeSnippet.text});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+    
+})
