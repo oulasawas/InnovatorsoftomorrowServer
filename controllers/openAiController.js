@@ -9,9 +9,9 @@ export async function codeSnippet(req, res){
             messages:[
                 {
                     role:"system",
-                    content:`You will provide only a code snippet in ${language} related to ${concept} with this theme ${description}. Do not include any other words in your response just a working code snippet.`,
+                    content:`You will provide only a code snippet in ${language} related to ${concept} with a ${description} example. Do not include any other words in your response just a working code snippet.`,
                     role:"user",
-                    content: `The student wants to learn about ${concept} in ${language}, give a only simple code snippet to ${description} do not include in your response any other words other than the code snippet`
+                    content: `The student wants to learn about ${concept} in ${language}, give in your response only the code snippet to ${description}. Do not include in your response any other words other than the code snippet`
                 }
             ]
         })
