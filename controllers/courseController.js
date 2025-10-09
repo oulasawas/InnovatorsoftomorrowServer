@@ -204,9 +204,14 @@ exports.getCode = async(req, res)=>{
         const section = lesson?.sections[parseInt(sectionNumber)];
 
         if (!section) return res.status(404).json({ error: "Section not found", course: course, lesson: lesson, section: section });
-
+        if(!Array.isArray(section.codes)){
+            return res.status(404).json({error:"no codes in this section"})
+        }
         //section[blockType] = { ...section[blockType], ...blockData };
         const codeSnippet = section.codes.find(c=> c.language === language)
+        if(!codeSnippet){
+            return res.status(404).json({error:"no code found for the language"})
+        }
         res.status(200).json({codeSnippet: codeSnippet.text});
     } catch (error) {
         res.status(500).json({ error: error.message });
