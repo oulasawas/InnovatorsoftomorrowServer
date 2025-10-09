@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-
+const codeSchema = new mongoose.Schema({
+  language: String,
+  text: String
+});
 const sectionSchema = new mongoose.Schema({
   sectionNumber: Number,
   title: String,
@@ -12,12 +15,7 @@ const sectionSchema = new mongoose.Schema({
     gifs: { type: [String], default: undefined  }
   },
   problem: { type: String, required: false },
-  codes: [
-    language: {type: String, required:true},
-    text: { type: String, required: false },
-    gifs: { type: [String], default: undefined  }
-
-  ],
+  codes: [codeSchema],
   challenge: {
     description: { type: String, required: false },
     hint: { type: String, required: false },
@@ -52,5 +50,6 @@ const courseSchema = new mongoose.Schema({
   description: String,
   lessons: [lessonSchema]
 });
+
 
 module.exports = mongoose.model('Course', courseSchema);
