@@ -1,9 +1,10 @@
 const express = require('express');
-const { getCourseById,getAllCourses, createCourse, addLessonToCourse, addSectionToLesson, updateCourseDetails, updateBlock, updateSection, updateLesson } = require('../controllers/courseController.js');
+const { getCourseById,getAllCourses, createCourse, addLessonToCourse, addSectionToLesson, updateCourseDetails, updateBlock, updateSection, updateLesson, getCode } = require('../controllers/courseController.js');
 
 const router = express.Router();
 router.get("/:title", getCourseById);
 router.get('/', getAllCourses);
+router.get('/:title/lessons/:lessonNumber/sections/:sectionNumber/code', getCode);
 router.post('/', createCourse); // POST /api/courses
 router.post('/:title/lessons', addLessonToCourse);
 router.post('/:title/lessons/:lessonId/sections', addSectionToLesson);
