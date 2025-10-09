@@ -203,7 +203,7 @@ exports.getCode = async(req, res)=>{
         const lesson = course?.lessons[parseInt(lessonNumber)];
         const section = lesson?.sections[parseInt(sectionNumber)];
 
-        if (!section) return res.status(404).json({ error: "Section not found" });
+        if (!section) return res.status(404).json({ error: "Section not found", courseId: courseId, lessonNumber: lessonNumber, sectionNumber: sectionNumber });
 
         //section[blockType] = { ...section[blockType], ...blockData };
         const codeSnippet = section.codes.find(c=> c.language === language)
