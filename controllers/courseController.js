@@ -195,7 +195,7 @@ exports.updateBlock = async (req, res) => {
     }
 };
 
-exports.getCode = async(req, res=>{
+exports.getCode = async(req, res)=>{
     const { courseId, lessonNumber, sectionNumber } = req.params;
     const language = req.body.language;
     try {
