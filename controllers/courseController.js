@@ -196,14 +196,14 @@ exports.updateBlock = async (req, res) => {
 };
 
 exports.getCode = async(req, res)=>{
-    const { courseId, lessonNumber, sectionNumber } = req.params;
+    const { title, lessonNumber, sectionNumber } = req.params;
     const language = req.body.language;
     try {
-        const course = await Course.findById(courseId);
+        const course = await Course.findById(title);
         const lesson = course?.lessons[parseInt(lessonNumber)];
         const section = lesson?.sections[parseInt(sectionNumber)];
 
-        if (!section) return res.status(404).json({ error: "Section not found", courseId: courseId, lessonNumber: lessonNumber, sectionNumber: sectionNumber });
+        if (!section) return res.status(404).json({ error: "Section not found", title: title, lessonNumber: lessonNumber, sectionNumber: sectionNumber });
 
         //section[blockType] = { ...section[blockType], ...blockData };
         const codeSnippet = section.codes.find(c=> c.language === language)
