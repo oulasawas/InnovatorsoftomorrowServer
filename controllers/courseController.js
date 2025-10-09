@@ -207,8 +207,7 @@ exports.getCode = async(req, res)=>{
         if(!Array.isArray(section.codes)){
             return res.status(404).json({error:"no codes in this section", section: section})
         }
-        //section[blockType] = { ...section[blockType], ...blockData };
-        const codeSnippet = section.codes.find(c=> c.language === language)
+        const codeSnippet = section["codes"].find(c=> c.language === language)
         if(!codeSnippet){
             return res.status(404).json({error:"no code found for the language"})
         }
