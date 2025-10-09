@@ -199,7 +199,7 @@ exports.getCode = async(req, res)=>{
     const { title, lessonNumber, sectionNumber } = req.params;
     const language = req.body.language;
     try {
-        const course = await Course.findById(title);
+        const course = await Course.findOne({ title: title });
         const lesson = course?.lessons[parseInt(lessonNumber)];
         const section = lesson?.sections[parseInt(sectionNumber)];
 
