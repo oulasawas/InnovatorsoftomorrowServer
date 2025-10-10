@@ -36,6 +36,9 @@ const userSchema = new mongoose.Schema({
   totalPoints: {
     type: Number,
     default: 0
+  },
+  selectedLanguage:{
+    type: String
   }
 });
 userSchema.pre("save", async function (next) {
