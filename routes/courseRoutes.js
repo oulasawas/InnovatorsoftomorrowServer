@@ -4,7 +4,7 @@ const { getCourseById,getAllCourses, createCourse, addLessonToCourse, addSection
 const router = express.Router();
 router.get("/:title", getCourseById);
 router.get('/', getAllCourses);
-router.get('/:title/lessons/:lessonNumber/sections/:sectionNumber/code', getCode);
+router.post('/:title/lessons/:lessonNumber/sections/:sectionNumber/code', getCode);
 router.post('/', createCourse); // POST /api/courses
 router.post('/:title/lessons', addLessonToCourse);
 router.post('/:title/lessons/:lessonId/sections', addSectionToLesson);
