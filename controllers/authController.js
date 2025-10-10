@@ -32,7 +32,8 @@ export async function loginUser(req, res){
         email: user.email,
         teacher: user.teacher,
         enrolledCourses: user.enrolledCourses,
-        totalPoints: user.totalPoints
+        totalPoints: user.totalPoints,
+        selectedLanguage: user.selectedLanguage
       },
     });
   } catch (err) {
