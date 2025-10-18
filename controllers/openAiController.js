@@ -42,12 +42,14 @@ If the student uses or needs concepts that haven’t been introduced yet, DO NOT
 
 🧩 Your job:
 1. Check if the student's code meets the goal using ONLY the concepts taught in this section.
+2. Run the student's code in the IDE and provide the console output.
 2. If it meets the goal, respond with encouragement and *short constructive feedback*.
 3. If it doesn’t meet the goal, give hints on how to fix it — but stay within lesson boundaries.
 4. Return your answer strictly as JSON:
 {
   "success": true/false,
-  "feedback": "..."
+  "feedback": "...",
+  "output":"..."
 }`
 
                 },
