@@ -197,16 +197,30 @@ exports.updateBlock = async (req, res) => {
 
 exports.getCode = async(req, res)=>{
     const { title, lessonNumber, sectionNumber } = req.params;
-    const language = req.body.language;
+    // language can come from query for GET requests or body if caller sends it there
+    const language = req.query?.language || req.body?.language;
     try {
         const course = await Course.findOne({ title: title });
-        const lesson = course?.lessons[parseInt(lessonNumber)];
-        const section = lesson?.sections[parseInt(sectionNumber)];
+        if (!course) return res.status(404).json({ error: "Course not found" });
 
-        if (!section) return res.status(404).json({ error: "Section not found"});
+        // Find lesson by its lessonNumber property (not by array index).
+        // Some code paths in this repo store lessonNumber as a numeric field on the lesson object.
+        const lesson = course.lessons.find(l => Number(l.lessonNumber) === Number(lessonNumber) || String(l.lessonId) === String(lessonNumber));
+        if (!lesson) return res.status(404).json({ error: "Lesson not found" });
+
+        // Find section by its sectionNumber property (not by array index).
+        const section = (lesson.sections || []).find(s => Number(s.sectionNumber) === Number(sectionNumber) || String(s.sectionId) === String(sectionNumber));
+        if (!section) return res.status(404).json({ error: "Section not found" });
+
         if(!Array.isArray(section["codes"])){
             return res.status(404).json({error:"no codes in this section", section: section})
         }
+
+        // If language is not provided, return all codes
+        if (!language) {
+            return res.status(200).json({ codes: section.codes });
+        }
+
         const codeSnippet = section["codes"].find(c=> c.language === language)
         if(!codeSnippet){
             return res.status(404).json({error:"no code found for the language"})
