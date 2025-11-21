@@ -1,4 +1,4 @@
-const { S3Client, ListObjectsV2Command, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const Media = require('../models/Media.js');
 
 // Initialize S3 client for Cloudflare R2
