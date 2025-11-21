@@ -15,7 +15,7 @@ const s3Client = new S3Client({
 exports.getMp4FromFolder = async (req, res) => {
   try {
     const { folder } = req.params;
-    const prefix = folder ? `${folder}/` : '';
+    const prefix = folder ? `videos/${folder}/` : '';
     
     const command = new ListObjectsV2Command({
       Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
@@ -51,6 +51,7 @@ exports.getAllSb3Files = async (req, res) => {
   try {
     const command = new ListObjectsV2Command({
       Bucket: process.env.CLOUDFLARE_BUCKET_NAME,
+      Prefix: "scratch/downloadable/"
     });
 
     const response = await s3Client.send(command);
