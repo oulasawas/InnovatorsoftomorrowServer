@@ -13,7 +13,7 @@ const openai = new OpenAI({
  * Response: { "spriteUrl": "<image url>" }
  */
 router.post('/generate-sprite', async (req, res) => {
-    const { prompt, size } = req.body;
+    const { prompt } = req.body;
     if (!prompt) {
         return res.status(400).json({ error: 'Prompt is required' });
     }
@@ -23,7 +23,6 @@ router.post('/generate-sprite', async (req, res) => {
         const response = await openai.images.generate({
     model: "gpt-image-1",
     prompt,
-    size,
     quality: "high",        // makes edges sharpe
    
 });
