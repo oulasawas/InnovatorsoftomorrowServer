@@ -1,35 +1,33 @@
-// Sprite generation controller using OpenAI image API
 const express = require('express');
 const router = express.Router();
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 
-// Make sure to provide OPENAI_API_KEY in your environment
-const openai = new OpenAIApi(new Configuration({
+// Initialize OpenAI with your API key
+const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
-}));
+});
 
 /**
  * POST /generate-sprite
- * Request body: { "prompt": "A blue dragon with wings" }
+ * Request body: { "prompt": "A blue dragon with wings", "size": "512x512" }
  * Response: { "sprite": "<base64 PNG image>" }
  */
 router.post('/generate-sprite', async (req, res) => {
-    const { prompt } = req.body;
+    const { prompt, size } = req.body;
     if (!prompt) {
         return res.status(400).json({ error: 'Prompt is required' });
     }
 
     try {
-        // Call OpenAI image generation API - DALL-E 3 endpoint
-        const response = await openai.createImage({
+        // Call OpenAI image generation API
+        const response = await openai.images.generate({
             prompt,
             n: 1,
-            size: "512x512", // You may adjust size for your needs!
-            response_format: "b64_json" // Request base64-encoded response
+            size: size,
+            response_format: "b64_json"
         });
 
-        // Get base64 image string
-        const base64Image = response.data.data[0].b64_json;
+        const base64Image = response.data[0].b64_json;
 
         return res.json({
             sprite: base64Image,
