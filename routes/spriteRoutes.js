@@ -13,7 +13,7 @@ const openai = new OpenAI({
  * Response: { "spriteUrl": "<image url>" }
  */
 router.post('/generate-sprite', async (req, res) => {
-    const { prompt, size = "512x512" } = req.body;
+    const { prompt, size } = req.body;
     if (!prompt) {
         return res.status(400).json({ error: 'Prompt is required' });
     }
