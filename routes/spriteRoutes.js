@@ -21,11 +21,13 @@ router.post('/generate-sprite', async (req, res) => {
     try {
         // Call OpenAI image generation API with response_format as 'url'
         const response = await openai.images.generate({
-            prompt,
-            n: 1,
-            size: size,
-            response_format: "url"
-        });
+    model: "gpt-image-1",
+    prompt,
+    size,
+    quality: "high",        // makes edges sharper
+    style: "vivid",         // gives stronger pixel patterns
+    response_format: "url",
+});
 
         const imageUrl = response.data[0].url;
 
