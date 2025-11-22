@@ -24,8 +24,7 @@ router.post('/generate-sprite', async (req, res) => {
     model: "gpt-image-1",
     prompt,
     size,
-    quality: "high",        // makes edges sharper
-    style: "vivid",         // gives stronger pixel patterns
+    quality: "high",        // makes edges sharpe
     response_format: "url",
 });
 
