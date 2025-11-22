@@ -25,7 +25,7 @@ router.post('/generate-sprite', async (req, res) => {
     prompt,
     size,
     quality: "high",        // makes edges sharpe
-    response_format: "url",
+   
 });
 
         const imageUrl = response.data[0].url;
