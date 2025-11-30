@@ -220,6 +220,7 @@ exports.generate = async (req, res) => {
     try {
       demoObj = JSON.parse(aiText);
     } catch (e) {
+      console.log(e)
       return res.status(502).json({ error: 'AI response was not valid JSON', raw: aiText });
     }
 
@@ -229,6 +230,7 @@ exports.generate = async (req, res) => {
   } catch (err) {
     console.error('AI demo generation error:', err);
     if (err.response) {
+      console.log(err.response)
       return res.status(err.response.status || 502).json({ error: err.response.data || 'API Error' });
     }
     return res.status(500).json({ error: 'Server error' });
