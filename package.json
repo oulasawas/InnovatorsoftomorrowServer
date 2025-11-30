@@ -13,6 +13,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.4",
-    "openai": "^6.2.0"
+    "openai": "^6.2.0",
+    "axios": "^1.6.7"
   }
 }
