@@ -178,7 +178,7 @@ exports.generate = async (req, res) => {
       data = {
         model: 'gpt-4', // or most recent available
         messages: [
-          { role: 'system', content: 'You are a helpful assistant that creates educational programming demos in valid JSON.' },
+          { role: 'system', content: 'Your response MUST be valid JSON and JSON only — do NOT include explanations, notes, markdown code fences, or any extra text. Respond ONLY with the JSON object itself.' },
           { role: 'user', content: userPrompt },
         ],
         temperature: 0.8,
