@@ -154,3 +154,82 @@ exports.deleteDemo = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.generate = async (req, res) => {
+  try {
+    const { demoId, prompt } = req.body;
+    if (typeof demoId !== 'number') {
+      return res.status(400).json({ error: 'demoId must be a number' });
+    }
+    const userPrompt =
+      prompt ||
+      `Create a programming demo for ID ${demoId}. The demo should contain a name, library, category, difficulty (beginner/intermediate/advanced), description (2-3 sentences), technologies (list), icon (emoji), estimatedTime, and 10 steps. Each step includes number (1-10), title, detailed description, working code, and tips. Output valid JSON.`; 
+
+    // Choose API
+    let apiKey, apiUrl, headers, data;
+    if (process.env.OPENAI_API_KEY) {
+      apiKey = process.env.OPENAI_API_KEY;
+      apiUrl = 'https://api.openai.com/v1/chat/completions';
+      headers = {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      };
+      data = {
+        model: 'gpt-4', // or most recent available
+        messages: [
+          { role: 'system', content: 'You are a helpful assistant that creates educational programming demos in valid JSON.' },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.8,
+        max_tokens: 2000
+      };
+    } else if (process.env.ANTHROPIC_API_KEY) {
+      apiKey = process.env.ANTHROPIC_API_KEY;
+      apiUrl = 'https://api.anthropic.com/v1/messages';
+      headers = {
+        'x-api-key': apiKey,
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01'
+      };
+      data = {
+        model: 'claude-3-sonnet-20240229',
+        max_tokens: 2000,
+        temperature: 0.8,
+        messages: [
+          { role: 'user', content: userPrompt }
+        ]
+      };
+    } else {
+      return res.status(500).json({ error: 'No API key configured' });
+    }
+
+    // Call AI API
+    const aiRes = await axios.post(apiUrl, data, { headers });
+    let aiText;
+    if (aiRes.data.choices) {
+      aiText = aiRes.data.choices[0].message?.content;
+    } else if (aiRes.data.content) {
+      aiText = aiRes.data.content;
+    } else if (aiRes.data.messages) {
+      aiText = aiRes.data.messages[0]?.content;
+    }
+
+    // Parse to JSON
+    let demoObj;
+    try {
+      demoObj = JSON.parse(aiText);
+    } catch (e) {
+      return res.status(502).json({ error: 'AI response was not valid JSON', raw: aiText });
+    }
+
+    // (optional) Validate Demo schema fields here
+
+    return res.json(demoObj);
+  } catch (err) {
+    console.error('AI demo generation error:', err);
+    if (err.response) {
+      return res.status(err.response.status || 502).json({ error: err.response.data || 'API Error' });
+    }
+    return res.status(500).json({ error: 'Server error' });
+  }
+}
