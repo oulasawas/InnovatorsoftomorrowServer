@@ -23,6 +23,6 @@ router.post('/', authMiddleware, teacherMiddleware, createDemo);
 router.put('/:id', authMiddleware, teacherMiddleware, updateDemo);
 router.delete('/:id', authMiddleware, teacherMiddleware, deleteDemo);
 
-router.post('/generate', teacherMiddleware, generate);
+router.post('/generate', authMiddleware, teacherMiddleware, generate);
 
 module.exports = router;
