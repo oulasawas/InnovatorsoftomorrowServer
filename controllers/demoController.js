@@ -49,7 +49,7 @@ exports.searchDemos = async (req, res) => {
  */
 exports.getDemoById = async (req, res) => {
   try {
-    const demo = await Demo.findOne({ id: parseInt(req.params.id) });
+    const demo = await Demo.findOne({ id: parseInt(req.params.id, 10) });
     if (!demo) {
       return res.status(404).json({ error: 'Demo not found' });
     }
@@ -110,7 +110,7 @@ exports.createDemo = async (req, res) => {
  */
 exports.updateDemo = async (req, res) => {
   try {
-    const demoId = parseInt(req.params.id);
+    const demoId = parseInt(req.params.id, 10);
     const updates = req.body;
 
     // Validate steps if provided
@@ -142,7 +142,7 @@ exports.updateDemo = async (req, res) => {
  */
 exports.deleteDemo = async (req, res) => {
   try {
-    const demoId = parseInt(req.params.id);
+    const demoId = parseInt(req.params.id, 10);
     const demo = await Demo.findOneAndDelete({ id: demoId });
 
     if (!demo) {
