@@ -5,7 +5,8 @@ const {
   getDemoById,
   createDemo,
   updateDemo,
-  deleteDemo
+  deleteDemo,
+  generate
 } = require('../controllers/demoController.js');
 const authMiddleware = require('../middleware/authMiddleware');
 const { teacherMiddleware } = require('../middleware/authMiddleware');
@@ -21,5 +22,7 @@ router.get('/', getAllDemos);
 router.post('/', authMiddleware, teacherMiddleware, createDemo);
 router.put('/:id', authMiddleware, teacherMiddleware, updateDemo);
 router.delete('/:id', authMiddleware, teacherMiddleware, deleteDemo);
+
+router.post('/generate', teacherMiddleware, generate);
 
 module.exports = router;
