@@ -29,6 +29,9 @@ const sectionSchema = new mongoose.Schema({
     gifs: { type: [String], default: undefined  }
 
   },
+  
+  scratchProjectUrl: {type: String, required: false},
+
   topic: {
     title: { type: String, required: false },
     characterIntro: { type: String, required: false },
