@@ -5,7 +5,18 @@ const Course = require('../models/Course.js');
 exports.getAllCourses = async (req, res) => {
     try {
         const courses = await Course.find();
-        res.status(200).json(courses);
+        
+        // Sort: courses with lessons first, then courses without lessons
+        const sortedCourses = courses.sort((a, b) => {
+            const aHasLessons = a.lessons && a.lessons.length > 0;
+            const bHasLessons = b.lessons && b.lessons.length > 0;
+            
+            if (aHasLessons && !bHasLessons) return -1;
+            if (!aHasLessons && bHasLessons) return 1;
+            return 0; // maintain original order if both have or both don't have lessons
+        });
+        
+        res.status(200).json(sortedCourses);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
